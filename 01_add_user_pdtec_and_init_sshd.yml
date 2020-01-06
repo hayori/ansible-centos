@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: True
+  roles:
+    - add_user_pdtec
+    - sshd

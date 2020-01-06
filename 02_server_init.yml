@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: True
+  roles:
+    - tz_jst
+    - hostname
+    - yum_update
+    - apache
+    - firewalld

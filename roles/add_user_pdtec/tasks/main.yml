@@ -1,0 +1,29 @@
+---
+- name: add group
+  group: 
+    name: webadm
+- name: add the user 'pdtec'
+  user:
+    name: pdtec
+    state: present
+    shell: /bin/bash
+    groups: wheel, webadm
+    append: yes
+- file:
+    path: /home/pdtec/.ssh
+    owner: pdtec
+    group: pdtec
+    state: directory
+    mode: 0700
+- name: set public key
+  copy:
+    src: roles/add_user_pdtec/files/pdtec_ecdsa.pub
+    dest: /home/pdtec/.ssh/authorized_keys
+    owner: pdtec
+    group: pdtec
+    mode: 0600
+- name: nopasswd sudo
+  lineinfile:
+    dest: /etc/sudoers
+    backup: yes
+    line: 'pdtec ALL=(ALL) NOPASSWD: ALL'
